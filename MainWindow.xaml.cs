@@ -24,14 +24,14 @@ namespace CurrencyConverterStatic
 
         private string _from ="";
         private string _to = "";
-        private string _amount = "";
+        private string _amount = "1";
 
         public string? To { get { return _to; } set { _to = value; } }
         public string? From { get { return _from; } set { _from = value; } }
         public string? Amount { get { return _amount; } set { _amount = value; } }
         private string jsonString = "";
         CurrencyRequest currencyRequest;
-        CurrencyResponse response;
+        Currency response;
 
         public MainWindow()
         {
@@ -42,20 +42,27 @@ namespace CurrencyConverterStatic
             ToBox.SelectedItem = CurrenciesList[0];
         }
 
-        private void ConvertCurrency(object sender, RoutedEventArgs e)
+        private async void ConvertCurrency(object sender, RoutedEventArgs e)
         {
             From = FromBox.SelectedValue.ToString();
             To = ToBox.SelectedValue.ToString();
-            Amount = AmountField.Text;
+
+            if(AmountField.Text == "" ||  AmountField.Text == "0" ||  AmountField == null )
+            {
+                MessageBox.Show("Amount must be filled and must be greater then 0");
+            }
+            else
+            {
+                Amount = AmountField.Text;
+            }
 
             currencyRequest = new CurrencyRequest(_to, _from, _amount);
-            currencyRequest.GetAsync();
+            response = await currencyRequest.GetAsync();
+            Result.Text = response.Result.ToString();
         }
 
         private void ClearForm(object sender, RoutedEventArgs e)
         {
-            FromBox.Text = "";
-            ToBox.Text = "";
             AmountField.Text = "";
             Result.Text = "0";
         }
@@ -72,6 +79,7 @@ namespace CurrencyConverterStatic
 
         private void GetResult()
         {
+
              currencyRequest.GetAsync();
         }
     }

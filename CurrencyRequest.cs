@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -22,6 +24,7 @@ namespace CurrencyConverterStatic
         public string To { get { return _to; } set { _to = value; } }
         public string From { get { return _from; } set { _from = value; } }
         public string Amount { get { return _amount; } set { _amount = value; } }
+        public Currency currency;
 
 
         public CurrencyRequest(string to, string from, string amount)
@@ -36,13 +39,12 @@ namespace CurrencyConverterStatic
             return new string($"{url}?to={To}&from={From}&amount={Amount}&apikey={TOKEN}");
         }
 
-        public async void GetAsync()
+        public async Task<Currency?> GetAsync()
         {
-            string res;
             using (HttpClient client = new HttpClient())
             {
-                Result = await client.GetStringAsync($"{url}?to={To}&from={From}&amount={Amount}&apikey={TOKEN}");
-                MessageBox.Show(Result);
+                string result = await client.GetStringAsync($"{url}?to={To}&from={From}&amount={Amount}&apikey={TOKEN}");
+                return JsonConvert.DeserializeObject<Currency>(result);
 
                 //using (StreamWriter sw = new StreamWriter("my.json"))
                 //{
