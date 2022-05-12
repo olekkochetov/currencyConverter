@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace CurrencyConverterStatic.ViewModels
@@ -10,8 +11,8 @@ namespace CurrencyConverterStatic.ViewModels
     {
         private ObservableCollection<string> _currenciesList = new ObservableCollection<string>() { "UAH", "EUR", "USD", "RUB" };
 
-        private string _from = "";
-        private string _to = "";
+        private string _from = "EUR";
+        private string _to = "UAH";
         private string _amount = "10";
         private string _result = "";
 
@@ -33,7 +34,7 @@ namespace CurrencyConverterStatic.ViewModels
                 OnPropertyChanged();
             } 
         }
-        public string Amount { get { return _amount; } set { _amount = value; } }
+        public string Amount { get { return _amount; } set { _amount = value; OnPropertyChanged(); } }
         public string Res 
         {
             get { return _result; }
@@ -42,19 +43,35 @@ namespace CurrencyConverterStatic.ViewModels
                 OnPropertyChanged();
             } 
         }
-
+        public int selectedIndexTo { get; set; } = 1;
+        public int selectedIndexFrom { get; set;} = 0;
         public ObservableCollection<string> CurrenciesList { get { return _currenciesList; } }
 
-        public ConvertCommand convert { get { return new ConvertCommand(ClickEvent); } }
+        public ButtonClickCommand Convert { get { return new ButtonClickCommand(ClickConvertButton); } }
+        public ButtonClickCommand Clear { get { return new ButtonClickCommand(ClickClearButton); } }
+        public ButtonClickCommand Swip { get { return new ButtonClickCommand(ClickSwip); } }
         CurrencyRequestViewModel? currencyRequest;
         CurrencyModel? response;
 
 
-        public async void ClickEvent(object ob)
+        public async void ClickConvertButton(object ob)
         {
             currencyRequest = new CurrencyRequestViewModel(To, From, Amount);
             response = await currencyRequest.GetAsync();
             Res = response.Result.ToString();
+        }
+
+        public void ClickClearButton(object ob)
+        {
+            Amount = "";
+            Res = "0";
+        }
+
+        public void ClickSwip(object ob)
+        {
+            string tmp = To;
+            To = From;
+            From = tmp;
         }
     }
 }

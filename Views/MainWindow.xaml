@@ -61,18 +61,18 @@
 
                 <StackPanel Style="{StaticResource inner}" Grid.Column="1">
                     <TextBlock Text="From:" Foreground="White" FontSize="20"/>
-                    <ComboBox x:Name="FromBox" Width="200" Height="30" SelectionChanged="FromBox_SelectionChanged" ItemsSource="{Binding CurrenciesList}" SelectedValue="{Binding From}"/>
+                    <ComboBox x:Name="FromBox" Width="200" Height="30" SelectionChanged="FromBox_SelectionChanged" ItemsSource="{Binding CurrenciesList}"  SelectedValue="{Binding From}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Margin="50 20 0 0">
-                    <Button x:Name="SwipBtn" Background="Transparent" BorderBrush="Transparent" Click="SwipCurrencies">
+                    <Button x:Name="SwipBtn" Background="Transparent" BorderBrush="Transparent" Command="{Binding Swip}">
                         <fa:FontAwesome Icon="Exchange" FontSize="40"  Foreground="White"/>
                     </Button>
                 </StackPanel>
                 
                 <StackPanel Style="{StaticResource inner}" Grid.Column="3">
                     <TextBlock Text="To:" Foreground="White" FontSize="20"/>
-                    <ComboBox x:Name="ToBox" Width="200" Height="30" ItemsSource="{Binding CurrenciesList}" SelectedValue="{Binding To}"></ComboBox>
+                    <ComboBox x:Name="ToBox" Width="200" Height="30" SelectionChanged="ToBox_SelectionChanged" ItemsSource="{Binding CurrenciesList}"  SelectedValue="{Binding To}"/>
                 </StackPanel>
             </Grid>
         </StackPanel>
@@ -81,8 +81,8 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Content="Convert" Style="{StaticResource RoundedButton}" HorizontalAlignment="Right" Command="{Binding convert}"/>
-            <Button Content="Clear" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource RoundedButton}" Click="ClearForm"/>
+            <Button Content="Convert" Style="{StaticResource RoundedButton}" HorizontalAlignment="Right" Command="{Binding Convert}"/>
+            <Button Content="Clear" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource RoundedButton}" Command="{Binding Clear}"/>
         </Grid>
         <Grid x:Name="ResultDisplay" Grid.Row="4">
             <TextBlock x:Name="Result" Text="{Binding Res}" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>

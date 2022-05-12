@@ -25,11 +25,6 @@ namespace CurrencyConverterStatic
             InitializeComponent();
         }
 
-        private void ClearForm(object sender, RoutedEventArgs e)
-        {
-            AmountField.Text = "";
-            Result.Text = "0";
-        }
 
         private void SwipCurrencies(object sender, RoutedEventArgs e)
         {
@@ -37,6 +32,11 @@ namespace CurrencyConverterStatic
         }
 
         private void FromBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ToBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

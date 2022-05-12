@@ -10,8 +10,7 @@ namespace CurrencyConverterStatic.Core.Commands
     public  class CoreCommand : ICommand
     {
         Action<object> _execute;
-        Predicate<object> _canExecute;
-
+        Task _taskExecute;
         public event EventHandler? CanExecuteChanged;
 
         public CoreCommand(Action<object> execute)
@@ -26,8 +25,7 @@ namespace CurrencyConverterStatic.Core.Commands
 
         public void Execute(object? parameter)
         {
-            _execute(parameter);
+            _execute?.Invoke(parameter);
         }
-
     }
 }

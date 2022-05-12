@@ -8,8 +8,8 @@ using System.Windows.Input;
 
 namespace CurrencyConverterStatic.ViewModels
 {
-    public class ConvertCommand : CoreCommand
+    public class ButtonClickCommand : CoreCommand
     {
-        public ConvertCommand(Action<object> execute) : base(execute){}
+        public ButtonClickCommand(Action<object> execute) : base(execute){}
     }
 }
