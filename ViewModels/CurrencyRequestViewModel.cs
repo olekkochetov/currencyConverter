@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace CurrencyConverterStatic
 {
-    internal class CurrencyRequest : HttpClient 
+    internal class CurrencyRequestViewModel : HttpClient 
     {
         private string _to = "";
         private string _from = "";
@@ -24,10 +24,10 @@ namespace CurrencyConverterStatic
         public string To { get { return _to; } set { _to = value; } }
         public string From { get { return _from; } set { _from = value; } }
         public string Amount { get { return _amount; } set { _amount = value; } }
-        public Currency currency;
+        public CurrencyModel currency;
 
 
-        public CurrencyRequest(string to, string from, string amount)
+        public CurrencyRequestViewModel(string to, string from, string amount)
         {
             To = to;
             From = from;
@@ -39,13 +39,13 @@ namespace CurrencyConverterStatic
             return new string($"{url}?to={To}&from={From}&amount={Amount}&apikey={TOKEN}");
         }
 
-        public async Task<Currency?> GetAsync()
+        public async Task<CurrencyModel?> GetAsync()
         {
             using (HttpClient client = new HttpClient())
             {
                 string result = await client.GetStringAsync($"{url}?to={To}&from={From}&amount={Amount}&apikey={TOKEN}");
-                return JsonConvert.DeserializeObject<Currency>(result);
-
+                 var test = JsonConvert.DeserializeObject<CurrencyModel>(result);
+                return test;
                 //using (StreamWriter sw = new StreamWriter("my.json"))
                 //{
                 //    await sw.WriteAsync(res);

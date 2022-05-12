@@ -3,8 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:fa="clr-namespace:FontAwesome.WPF;assembly=FontAwesome.WPF"
+        xmlns:local="clr-namespace:CurrencyConverterStatic"
+        xmlns:vm="clr-namespace:CurrencyConverterStatic.ViewModels"
         mc:Ignorable="d"
         Title="Currency Converter" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+    
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
     <Window.Resources>
         <Style TargetType="StackPanel" x:Key="inner" >
             <Setter Property="Margin" Value="50 0 0 0" />
@@ -55,7 +61,7 @@
 
                 <StackPanel Style="{StaticResource inner}" Grid.Column="1">
                     <TextBlock Text="From:" Foreground="White" FontSize="20"/>
-                    <ComboBox x:Name="FromBox" Width="200" Height="30" SelectionChanged="FromBox_SelectionChanged" ItemsSource="{Binding CurrenciesList}"/>
+                    <ComboBox x:Name="FromBox" Width="200" Height="30" SelectionChanged="FromBox_SelectionChanged" ItemsSource="{Binding CurrenciesList}" SelectedValue="{Binding From}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Margin="50 20 0 0">
@@ -66,7 +72,7 @@
                 
                 <StackPanel Style="{StaticResource inner}" Grid.Column="3">
                     <TextBlock Text="To:" Foreground="White" FontSize="20"/>
-                    <ComboBox x:Name="ToBox" Width="200" Height="30"></ComboBox>
+                    <ComboBox x:Name="ToBox" Width="200" Height="30" ItemsSource="{Binding CurrenciesList}" SelectedValue="{Binding To}"></ComboBox>
                 </StackPanel>
             </Grid>
         </StackPanel>
@@ -75,11 +81,11 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Content="Convert" Style="{StaticResource RoundedButton}" HorizontalAlignment="Right" Click="ConvertCurrency"/>
+            <Button Content="Convert" Style="{StaticResource RoundedButton}" HorizontalAlignment="Right" Command="{Binding convert}"/>
             <Button Content="Clear" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource RoundedButton}" Click="ClearForm"/>
         </Grid>
         <Grid x:Name="ResultDisplay" Grid.Row="4">
-            <TextBlock x:Name="Result" Text="10" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock x:Name="Result" Text="{Binding Res}" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
     </Grid>
 </Window>

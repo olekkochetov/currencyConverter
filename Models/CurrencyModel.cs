@@ -2,7 +2,7 @@
 
 namespace CurrencyConverterStatic
 {
-    public class Currency
+    public class CurrencyModel
     {
         [JsonProperty("success")]
         public bool Success { get; set; }
