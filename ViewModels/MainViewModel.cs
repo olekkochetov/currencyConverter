@@ -1,9 +1,5 @@
 ﻿using CurrencyConverterStatic.Core;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace CurrencyConverterStatic.ViewModels
 {
@@ -14,7 +10,7 @@ namespace CurrencyConverterStatic.ViewModels
         private string _from = "EUR";
         private string _to = "UAH";
         private string _amount = "10";
-        private string _result = "";
+        private string _result = "0.0 €";
 
         public string To
         { 
@@ -58,7 +54,7 @@ namespace CurrencyConverterStatic.ViewModels
         {
             currencyRequest = new CurrencyRequestViewModel(To, From, Amount);
             response = await currencyRequest.GetAsync();
-            Res = response.Result.ToString();
+            Res = response.Result.ToString() + " €";
         }
 
         public void ClickClearButton(object ob)
